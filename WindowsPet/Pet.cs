@@ -1,0 +1,32 @@
+﻿namespace WindowsPet
+{
+    public enum AnimationState
+    {
+        Idle,
+        Moving
+    }
+
+    public enum MovementState
+    {
+        Nowhere,
+        ToWardsMouse,
+        ToWardsFocusedWindow,
+        ToWardsRandomLocation
+    }
+
+    public enum Direction
+    {
+        Left,
+        Right
+    }
+
+    public class Pet(Animation idleAnimation, Animation walkAnimation)
+    {
+        public Size Size { get; init; } = idleAnimation.Dimentions;
+        public Direction Direction { get; set; } = Direction.Left;
+        public Animation IdleAnimation { get; init; } = idleAnimation;
+        public Animation WalkAnimation { get; init; } = walkAnimation;
+        public AnimationState AnimationState { get; set; } = AnimationState.Idle;
+        public MovementState MovementState { get; set; } = MovementState.Nowhere;
+    }
+}
