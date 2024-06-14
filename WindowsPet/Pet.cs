@@ -9,9 +9,9 @@
     public enum MovementState
     {
         Nowhere,
-        ToWardsMouse,
-        ToWardsFocusedWindow,
-        ToWardsRandomLocation
+        TowardsMouse,
+        TowardsFocusedWindow,
+        TowardsRandomLocation
     }
 
     public enum Direction

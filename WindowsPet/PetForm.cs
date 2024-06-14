@@ -21,7 +21,23 @@ namespace WindowsPet
 
         private void BehaviorController()
         {
-            //TODO: Implement behavior...
+            Random random = new();
+            Array movementStates = Enum.GetValues(typeof(MovementState));
+            MovementState newMovementState;
+
+            while (true)
+            {
+                newMovementState = (MovementState)movementStates.GetValue(random.Next(movementStates.Length))!;
+
+                if (newMovementState == MovementState.TowardsRandomLocation)
+                {
+                    ScreenLocationManager.NewRandomLocation();
+                }
+
+                WindowsPet.MovementState = newMovementState;
+
+                Thread.Sleep(random.Next(7000, 20000 + 1));
+            }
         }
 
         private void AnimationController()
@@ -51,6 +67,8 @@ namespace WindowsPet
                 {
                     SetFrame(animationRunning.NextFrame(WindowsPet.Direction));
                     animationTimer.Start();
+
+                    SetSizeToFit();
                 }
             }
         }
@@ -75,16 +93,16 @@ namespace WindowsPet
                         WindowsPet.AnimationState = AnimationState.Idle;
                         break;
 
-                    case MovementState.ToWardsMouse:
+                    case MovementState.TowardsMouse:
                         GoTowardsMouse(speedInPixelsPerSec);
                         break;
 
-                    case MovementState.ToWardsFocusedWindow:
+                    case MovementState.TowardsFocusedWindow:
                         GoTowardsFocusedWindow(speedInPixelsPerSec);
                         break;
 
-                    case MovementState.ToWardsRandomLocation:
-                        //TODO: Do stuff...
+                    case MovementState.TowardsRandomLocation:
+                        GoTowardsRandomLocation(speedInPixelsPerSec);
                         break;
                 }
             }
@@ -109,6 +127,11 @@ namespace WindowsPet
         {
             WindowManager.RECT rect = WindowManager.GetWindowRectangle(HomeHandle);
             GoTowardsLocation(new Point((rect.Left + rect.Right) / 2, rect.Top), pixelsPerSec);
+        }
+
+        private void GoTowardsRandomLocation(int pixelsPerSec)
+        {
+            GoTowardsLocation(ScreenLocationManager.RandomLocation, pixelsPerSec);
         }
 
         private void GoTowardsLocation(Point location, int pixelsPerSec)
@@ -168,6 +191,18 @@ namespace WindowsPet
             else
             {
                 Location = new Point(location.X - 32 * 3 / 2, location.Y - 32 * 3);
+            }
+        }
+
+        private void SetSizeToFit()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(() => { Size = pictureBox.Image.Size; });
+            }
+            else
+            {
+                Size = pictureBox.Image.Size;
             }
         }
 
