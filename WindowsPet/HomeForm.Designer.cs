@@ -52,6 +52,7 @@
             Controls.Add(pictureBox);
             FormBorderStyle = FormBorderStyle.None;
             Name = "HomeForm";
+            ShowInTaskbar = false;
             Text = "HomeForm";
             TopMost = true;
             TransparencyKey = SystemColors.Control;

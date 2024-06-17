@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PetForm));
             pictureBox = new PictureBox();
+            notifyIcon = new NotifyIcon(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             SuspendLayout();
             // 
@@ -40,6 +43,13 @@
             pictureBox.Size = new Size(800, 450);
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
+            pictureBox.Click += WindowsPetClicked;
+            // 
+            // notifyIcon
+            // 
+            notifyIcon.Icon = (Icon)resources.GetObject("notifyIcon.Icon");
+            notifyIcon.Text = "Window Pet";
+            notifyIcon.Visible = true;
             // 
             // PetForm
             // 
@@ -49,6 +59,7 @@
             Controls.Add(pictureBox);
             FormBorderStyle = FormBorderStyle.None;
             Name = "PetForm";
+            ShowInTaskbar = false;
             Text = "Form1";
             TopMost = true;
             TransparencyKey = SystemColors.Control;
@@ -59,5 +70,6 @@
         #endregion
 
         private PictureBox pictureBox;
+        private NotifyIcon notifyIcon;
     }
 }

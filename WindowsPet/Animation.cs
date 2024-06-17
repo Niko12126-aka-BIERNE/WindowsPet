@@ -7,26 +7,37 @@
         public int FrameDelayInMilliseconds { get; private set; } = frameDelayInMilliseconds;
         private int frameIndex = 0;
 
-        public static Animation FromSpriteSheetAndMetaData(Bitmap spriteSheet, int spriteWidth, int durationInMilliseconds)
+        public static Animation FromSpriteSheetAndMetaData(Bitmap spriteSheet, Size spriteDimentions, int frameCount, int durationInMilliseconds, bool reversing = false)
         {
-            Animation animation = new(durationInMilliseconds, new Size(spriteWidth, spriteSheet.Height));
+            Animation animation = new(durationInMilliseconds, spriteDimentions);
 
-            for (int spriteIndex = 0; spriteIndex < spriteSheet.Width / spriteWidth; spriteIndex++)
+            for (int spriteIndex = 0; spriteIndex < frameCount; spriteIndex++)
             {
-                Bitmap frame = new(spriteWidth, spriteSheet.Height);
-                int xOffset = spriteIndex * spriteWidth;
+                Bitmap frame = new(spriteDimentions.Width, spriteDimentions.Height);
 
-                for (int y = 0; y < spriteSheet.Height; y++)
+                int xOffset = spriteIndex * spriteDimentions.Width % spriteSheet.Width;
+                int yOffset = spriteIndex * spriteDimentions.Width / spriteSheet.Width * spriteDimentions.Height;
+
+                for (int y = 0; y < spriteDimentions.Height; y++)
                 {
-                    for (int x = 0; x < spriteWidth; x++)
+                    for (int x = 0; x < spriteDimentions.Width; x++)
                     {
-                        Color pixelFromSpriteSheet = spriteSheet.GetPixel(xOffset + x, y);
+                        Color pixelFromSpriteSheet = spriteSheet.GetPixel(xOffset + x, yOffset + y);
 
                         frame.SetPixel(x, y, pixelFromSpriteSheet);
                     }
                 }
 
                 animation.frames.Add(frame);
+            }
+
+            if (reversing)
+            {
+                for (int spriteIndex = frameCount - 1; spriteIndex >= 0; spriteIndex--)
+                {
+                    Bitmap frame = animation.frames[spriteIndex];
+                    animation.frames.Add(frame);
+                }
             }
 
             return animation;

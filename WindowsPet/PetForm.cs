@@ -6,17 +6,32 @@ namespace WindowsPet
     {
         private Pet WindowsPet { get; init; }
         private IntPtr HomeHandle { get; init; }
+        private bool stayAwayFromMouse;
 
         public PetForm(Pet windowsPet, IntPtr homeHandle)
         {
             WindowsPet = windowsPet;
             HomeHandle = homeHandle;
+            stayAwayFromMouse = false;
+
             InitializeComponent();
+            InitializeTrayIcon();
 
             new Thread(AnimationController).Start();
             new Thread(MovementController).Start();
 
             new Thread(BehaviorController).Start();
+        }
+
+        private void WindowsPetClicked(object sender, EventArgs e)
+        {
+            stayAwayFromMouse = !stayAwayFromMouse;
+
+            if (stayAwayFromMouse)
+            {
+                ScreenLocationManager.NewRandomLocation();
+                WindowsPet.MovementState = MovementState.TowardsRandomLocation;
+            }
         }
 
         private void BehaviorController()
@@ -28,6 +43,11 @@ namespace WindowsPet
             while (true)
             {
                 newMovementState = (MovementState)movementStates.GetValue(random.Next(movementStates.Length))!;
+
+                if (stayAwayFromMouse && newMovementState == MovementState.TowardsMouse)
+                {
+                    newMovementState = MovementState.TowardsRandomLocation;
+                }
 
                 if (newMovementState == MovementState.TowardsRandomLocation)
                 {
@@ -111,7 +131,7 @@ namespace WindowsPet
         private void GoTowardsMouse(int pixelsPerSec)
         {
             Point mouseLocation = MouseManager.GetMouseLocation();
-            GoTowardsLocation(mouseLocation, pixelsPerSec);
+            GoTowardsLocation(new Point(mouseLocation.X, mouseLocation.Y + WindowsPet.Size.Height / 4), pixelsPerSec);
         }
 
         private void GoTowardsFocusedWindow(int pixelsPerSec)
@@ -120,6 +140,10 @@ namespace WindowsPet
             if (rect is not null)
             {
                 GoTowardsLocation(new Point((rect.Value.Left + rect.Value.Right) / 2, rect.Value.Top), pixelsPerSec);
+            }
+            else
+            {
+                WindowsPet.AnimationState = AnimationState.Idle;
             }
         }
 
@@ -172,7 +196,8 @@ namespace WindowsPet
         {
             if (pictureBox.InvokeRequired)
             {
-                Invoke(() => {
+                Invoke(() =>
+                {
                     pictureBox.Image = frame;
                 });
             }
@@ -186,11 +211,11 @@ namespace WindowsPet
         {
             if (InvokeRequired)
             {
-                Invoke(() => { Location = new Point(location.X - 32 * 3 / 2, location.Y - 32 * 3); });
+                Invoke(() => { Location = new Point(location.X - WindowsPet.Size.Width / 2, location.Y - WindowsPet.Size.Height); });
             }
             else
             {
-                Location = new Point(location.X - 32 * 3 / 2, location.Y - 32 * 3);
+                Location = new Point(location.X - WindowsPet.Size.Width / 2, location.Y - WindowsPet.Size.Height);
             }
         }
 
@@ -210,12 +235,28 @@ namespace WindowsPet
         {
             if (InvokeRequired)
             {
-                return Invoke(() => {
+                return Invoke(() =>
+                {
                     return Handle;
                 });
             }
 
             return Handle;
+        }
+
+        private void InitializeTrayIcon()
+        {
+            ContextMenuStrip contextMenu = new();
+            ToolStripMenuItem exitMenuItem = new("Exit", null, OnExit);
+            contextMenu.Items.Add(exitMenuItem);
+
+            notifyIcon.ContextMenuStrip = contextMenu;
+        }
+
+        private void OnExit(object? sender, EventArgs e)
+        {
+            notifyIcon.Visible = false;
+            Environment.Exit(0);
         }
     }
 
