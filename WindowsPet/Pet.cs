@@ -20,8 +20,9 @@
         Right
     }
 
-    public class Pet(Animation idleAnimation, Animation walkAnimation)
+    public class Pet(Animation idleAnimation, Animation walkAnimation, Bitmap petIcon)
     {
+        public Bitmap PetIcon { get; init; } = petIcon;
         public Size Size { get; init; } = idleAnimation.Dimentions;
         public Direction Direction { get; set; } = Direction.Left;
         public Animation IdleAnimation { get; init; } = idleAnimation;

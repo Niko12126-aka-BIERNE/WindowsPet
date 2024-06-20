@@ -15,7 +15,7 @@ namespace WindowsPet
             stayAwayFromMouse = false;
 
             InitializeComponent();
-            InitializeTrayIcon();
+            InitializeTrayIcon(windowsPet.PetIcon);
 
             new Thread(AnimationController).Start();
             new Thread(MovementController).Start();
@@ -244,13 +244,14 @@ namespace WindowsPet
             return Handle;
         }
 
-        private void InitializeTrayIcon()
+        private void InitializeTrayIcon(Bitmap icon)
         {
             ContextMenuStrip contextMenu = new();
             ToolStripMenuItem exitMenuItem = new("Exit", null, OnExit);
             contextMenu.Items.Add(exitMenuItem);
 
             notifyIcon.ContextMenuStrip = contextMenu;
+            notifyIcon.Icon = Icon.FromHandle(icon.GetHicon());
         }
 
         private void OnExit(object? sender, EventArgs e)

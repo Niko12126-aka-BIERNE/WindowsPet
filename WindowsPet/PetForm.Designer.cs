@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PetForm));
             pictureBox = new PictureBox();
             notifyIcon = new NotifyIcon(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
@@ -47,7 +46,6 @@
             // 
             // notifyIcon
             // 
-            notifyIcon.Icon = (Icon)resources.GetObject("notifyIcon.Icon");
             notifyIcon.Text = "Window Pet";
             notifyIcon.Visible = true;
             // 
