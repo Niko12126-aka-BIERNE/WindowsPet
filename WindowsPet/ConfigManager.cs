@@ -29,7 +29,6 @@ namespace WindowsPet
             int width = EnvReader.GetIntValue("PET_SPRITE_WIDTH");
             int height = EnvReader.GetIntValue("PET_SPRITE_HEIGHT");
 
-
             return Animation.FromSpriteSheetAndMetaData(spriteSheet, new Size(width, height), frameCount, frameDelay);
         }
 
