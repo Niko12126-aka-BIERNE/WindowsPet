@@ -9,3 +9,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:WindowsPet.ConfigManager.LoadWalkAnimation~WindowsPet.Animation")]
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:WindowsPet.ConfigManager.LoadHomeSprite~System.Drawing.Bitmap")]
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:WindowsPet.ConfigManager.LoadWindowsPetIcon~System.Drawing.Bitmap")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:WindowsPet.ConfigManager.LoadBehaviorStateTime~System.ValueTuple{System.Int32,System.Int32}")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:WindowsPet.ConfigManager.LoadPetSpeedInPixelsPerSecond~System.Int32")]

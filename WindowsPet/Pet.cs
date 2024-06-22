@@ -20,7 +20,7 @@
         Right
     }
 
-    public class Pet(Animation idleAnimation, Animation walkAnimation, Bitmap petIcon)
+    public class Pet(Animation idleAnimation, Animation walkAnimation, Bitmap petIcon, int speedInPixelsPerSec, int minBehaviorStateTime, int maxBehaviorStateTime)
     {
         public Bitmap PetIcon { get; init; } = petIcon;
         public Size Size { get; init; } = idleAnimation.Dimentions;
@@ -29,5 +29,8 @@
         public Animation WalkAnimation { get; init; } = walkAnimation;
         public AnimationState AnimationState { get; set; } = AnimationState.Idle;
         public MovementState MovementState { get; set; } = MovementState.Nowhere;
+        public int SpeedInPixelsPerSec { get; init; } = speedInPixelsPerSec;
+        public int MinBehaviorStateTime { get; init; } = minBehaviorStateTime;
+        public int MaxBehaviorStateTime { get; init; } = maxBehaviorStateTime;
     }
 }

@@ -19,7 +19,9 @@ namespace WindowsPet
             Animation idleAnimation = configManager.LoadIdleAnimation();
             Animation walkAnimation = configManager.LoadWalkAnimation();
             Bitmap petIcon = configManager.LoadWindowsPetIcon();
-            Pet windowsPet = new(idleAnimation, walkAnimation, petIcon);
+            int speed = configManager.LoadPetSpeedInPixelsPerSecond();
+            (int min, int max) = configManager.LoadBehaviorStateTime();
+            Pet windowsPet = new(idleAnimation, walkAnimation, petIcon, speed, min, max);
 
             Application.Run(new HomeForm(homeSprite, windowsPet));
         }

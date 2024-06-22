@@ -56,7 +56,7 @@ namespace WindowsPet
 
                 WindowsPet.MovementState = newMovementState;
 
-                Thread.Sleep(random.Next(7000, 20000 + 1));
+                Thread.Sleep(random.Next(WindowsPet.MinBehaviorStateTime, WindowsPet.MaxBehaviorStateTime + 1));
             }
         }
 
@@ -95,7 +95,7 @@ namespace WindowsPet
 
         private void MovementController()
         {
-            int speedInPixelsPerSec = 1000;
+            int speedInPixelsPerSec = WindowsPet.SpeedInPixelsPerSec;
 
             while (true)
             {

@@ -7,9 +7,9 @@
         public int FrameDelayInMilliseconds { get; private set; } = frameDelayInMilliseconds;
         private int frameIndex = 0;
 
-        public static Animation FromSpriteSheetAndMetaData(Bitmap spriteSheet, Size spriteDimentions, int frameCount, int durationInMilliseconds, bool reversing = false)
+        public static Animation FromSpriteSheetAndMetaData(Bitmap spriteSheet, Size spriteDimentions, int frameCount, int durationInMilliseconds, int scale)
         {
-            Animation animation = new(durationInMilliseconds, spriteDimentions);
+            Animation animation = new(durationInMilliseconds, new Size(spriteDimentions.Width * scale, spriteDimentions.Height * scale));
 
             for (int spriteIndex = 0; spriteIndex < frameCount; spriteIndex++)
             {
@@ -28,16 +28,12 @@
                     }
                 }
 
-                animation.frames.Add(frame);
-            }
-
-            if (reversing)
-            {
-                for (int spriteIndex = frameCount - 1; spriteIndex >= 0; spriteIndex--)
+                if (scale > 1)
                 {
-                    Bitmap frame = animation.frames[spriteIndex];
-                    animation.frames.Add(frame);
+                    frame = frame.Resize(scale);
                 }
+
+                animation.frames.Add(frame);
             }
 
             return animation;
