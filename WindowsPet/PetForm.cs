@@ -7,12 +7,14 @@ namespace WindowsPet
         private Pet WindowsPet { get; init; }
         private IntPtr HomeHandle { get; init; }
         private bool stayAwayFromMouse;
+        private ScreenLocationManager ScreenLocationManager { get; init; }
 
         public PetForm(Pet windowsPet, IntPtr homeHandle)
         {
             WindowsPet = windowsPet;
             HomeHandle = homeHandle;
             stayAwayFromMouse = false;
+            ScreenLocationManager = new ScreenLocationManager(windowsPet.Size);
 
             InitializeComponent();
             InitializeTrayIcon(windowsPet.PetIcon);
@@ -161,6 +163,12 @@ namespace WindowsPet
         private void GoTowardsLocation(Point location, int pixelsPerSec)
         {
             if (location.Equals(GetLocation()))
+            {
+                WindowsPet.AnimationState = AnimationState.Idle;
+                return;
+            }
+
+            if (!ScreenLocationManager.IsValidLocation(location))
             {
                 WindowsPet.AnimationState = AnimationState.Idle;
                 return;
