@@ -7,7 +7,7 @@
         private Point lastLocation;
         public static bool StayAtHome { get; private set; }
 
-        public HomeForm(Bitmap homeSprite, Pet windowsPet)
+        public HomeForm(Bitmap homeSprite, Point startLocation, Pet windowsPet)
         {
             CurrentLocation = new Point(Location.X + homeSprite.Width / 2, Location.Y + homeSprite.Height);
             mouseDown = false;
@@ -16,6 +16,7 @@
             InitializeComponent();
 
             pictureBox.Image = homeSprite;
+            Location = startLocation;
 
             IntPtr handle = Handle;
             new Thread(() => Application.Run(new PetForm(windowsPet, handle))).Start();

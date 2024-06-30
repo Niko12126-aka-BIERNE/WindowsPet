@@ -15,6 +15,7 @@ namespace WindowsPet
             ConfigManager configManager = new();
 
             Bitmap homeSprite = configManager.LoadHomeSprite();
+            Point homeStartLocation = configManager.LoadHomeStartLocation();
 
             Animation idleAnimation = configManager.LoadIdleAnimation();
             Animation walkAnimation = configManager.LoadWalkAnimation();
@@ -23,7 +24,7 @@ namespace WindowsPet
             (int min, int max) = configManager.LoadBehaviorStateTime();
             Pet windowsPet = new(idleAnimation, walkAnimation, petIcon, speed, min, max);
 
-            Application.Run(new HomeForm(homeSprite, windowsPet));
+            Application.Run(new HomeForm(homeSprite, homeStartLocation, windowsPet));
         }
     }
 }

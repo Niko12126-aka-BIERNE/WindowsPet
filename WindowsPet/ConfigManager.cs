@@ -58,5 +58,13 @@ namespace WindowsPet
         {
             return EnvReader.GetIntValue("PET_SPEED_IN_PIXELS_PER_SECOND");
         }
+
+        public Point LoadHomeStartLocation()
+        {
+            int startCoordX = EnvReader.GetIntValue("HOME_START_LOCATION_X");
+            int startCoordY = EnvReader.GetIntValue("HOME_START_LOCATION_Y");
+
+            return new Point(startCoordX, startCoordY);
+        }
     }
 }

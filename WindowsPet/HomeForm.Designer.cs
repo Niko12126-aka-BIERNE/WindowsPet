@@ -36,8 +36,9 @@
             // 
             pictureBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox.Location = new Point(0, 0);
+            pictureBox.Margin = new Padding(7, 8, 7, 8);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(800, 450);
+            pictureBox.Size = new Size(1943, 1230);
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
             pictureBox.MouseDown += HomeMouseDown;
@@ -46,13 +47,15 @@
             // 
             // HomeForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1943, 1230);
             Controls.Add(pictureBox);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(7, 8, 7, 8);
             Name = "HomeForm";
             ShowInTaskbar = false;
+            StartPosition = FormStartPosition.Manual;
             Text = "HomeForm";
             TopMost = true;
             TransparencyKey = SystemColors.Control;
