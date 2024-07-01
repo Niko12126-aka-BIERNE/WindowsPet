@@ -22,7 +22,7 @@
 
 <h2>Setup</h2>
 <p>To set up your own windows pet you will need to create a Config.env file which then should be placed in the applications root directory.</p>
-<p>The Config-env file must contain the following attributes:</p>
+<p>The Config.env file must contain the following attributes:</p>
 
 <ul>
   <li><b>PET_SPRITE_WIDTH</b></li>  <p>This should be an integer containing your pets sprite width.</p>
