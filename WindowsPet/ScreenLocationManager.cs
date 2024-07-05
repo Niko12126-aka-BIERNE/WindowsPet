@@ -48,10 +48,19 @@
             screenShotGraphics.CopyFromScreen(randomScreen.Bounds.Left, randomScreen.Bounds.Top, 0, 0, randomScreen.Bounds.Size);
 
             List<Line> lines = DetectHorizontalLines(screenShot, (int)(petSize.Width * 1.5), 10, 5);
-            Line randomLine = lines[Random.Shared.Next(lines.Count)];
 
-            Point randomLineLocation = new(Random.Shared.Next(randomScreen.Bounds.Left + randomLine.StartX + petSize.Width / 2, randomScreen.Bounds.Left + randomLine.EndX - petSize.Width / 2), randomScreen.Bounds.Top + randomLine.StartY);
-            RandomLineLocation = randomLineLocation;
+            if (lines.Count > 0)
+            {
+                Line randomLine = lines[Random.Shared.Next(lines.Count)];
+
+                Point randomLineLocation = new(Random.Shared.Next(randomScreen.Bounds.Left + randomLine.StartX + petSize.Width / 2, randomScreen.Bounds.Left + randomLine.EndX - petSize.Width / 2), randomScreen.Bounds.Top + randomLine.StartY);
+                RandomLineLocation = randomLineLocation;
+            }
+            else
+            {
+                NewRandomLocation();
+                RandomLineLocation = RandomLocation;
+            }
         }
 
         private static List<Line> DetectHorizontalLines(Bitmap image, int minLength, int tolerance, int lineTolerance)
