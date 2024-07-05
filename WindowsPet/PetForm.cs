@@ -180,7 +180,7 @@ namespace WindowsPet
                 return;
             }
 
-            if (!ScreenLocationManager.IsValidLocation(location))
+            if (!ScreenLocationManager.IsValidLocation(location, WindowsPet.Size))
             {
                 WindowsPet.AnimationState = AnimationState.Idle;
                 return;

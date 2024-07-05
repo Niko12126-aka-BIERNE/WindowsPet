@@ -19,7 +19,7 @@
             );
         }
 
-        public static bool IsValidLocation(Point location)
+        public static bool IsValidLocation(Point location, Size petSize)
         {
             bool isValid = false;
 
@@ -30,7 +30,7 @@
 
                 isValid = location.X >= screenBounds.X && 
                           location.X < screenBounds.X + screenBounds.Width &&
-                          location.Y >= screenBounds.Y && 
+                          location.Y >= screenBounds.Y + petSize.Height && 
                           location.Y < screenBounds.Y + screenBounds.Height;
             }
 
