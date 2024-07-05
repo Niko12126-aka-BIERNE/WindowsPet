@@ -38,13 +38,12 @@ namespace WindowsPet
 
         private void BehaviorController()
         {
-            Random random = new();
             Array movementStates = Enum.GetValues(typeof(MovementState));
             MovementState newMovementState;
 
             while (true)
             {
-                newMovementState = (MovementState)movementStates.GetValue(random.Next(movementStates.Length))!;
+                newMovementState = (MovementState)movementStates.GetValue(Random.Shared.Next(movementStates.Length))!;
 
                 if (stayAwayFromMouse && newMovementState == MovementState.TowardsMouse)
                 {
@@ -55,10 +54,14 @@ namespace WindowsPet
                 {
                     ScreenLocationManager.NewRandomLocation();
                 }
+                else if (newMovementState == MovementState.TowardsRandomLineLocation)
+                {
+                    ScreenLocationManager.NewRandomLineLocation();
+                }
 
                 WindowsPet.MovementState = newMovementState;
 
-                Thread.Sleep(random.Next(WindowsPet.MinBehaviorStateTime, WindowsPet.MaxBehaviorStateTime + 1));
+                Thread.Sleep(Random.Shared.Next(WindowsPet.MinBehaviorStateTime, WindowsPet.MaxBehaviorStateTime + 1));
             }
         }
 
@@ -126,6 +129,10 @@ namespace WindowsPet
                     case MovementState.TowardsRandomLocation:
                         GoTowardsRandomLocation(speedInPixelsPerSec);
                         break;
+
+                    case MovementState.TowardsRandomLineLocation:
+                        GoTowardsRandomLineLocation(speedInPixelsPerSec);
+                        break;
                 }
             }
         }
@@ -158,6 +165,11 @@ namespace WindowsPet
         private void GoTowardsRandomLocation(int pixelsPerSec)
         {
             GoTowardsLocation(ScreenLocationManager.RandomLocation, pixelsPerSec);
+        }
+
+        private void GoTowardsRandomLineLocation(int pixelsPerSec)
+        {
+            GoTowardsLocation(ScreenLocationManager.RandomLineLocation, pixelsPerSec);
         }
 
         private void GoTowardsLocation(Point location, int pixelsPerSec)

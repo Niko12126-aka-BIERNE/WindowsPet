@@ -11,7 +11,8 @@
         Nowhere,
         TowardsMouse,
         TowardsFocusedWindow,
-        TowardsRandomLocation
+        TowardsRandomLocation,
+        TowardsRandomLineLocation
     }
 
     public enum Direction
