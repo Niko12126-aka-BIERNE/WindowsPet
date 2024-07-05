@@ -16,6 +16,7 @@
   <li>Chase cursor (Togglable by clicking on the pet)</li>
   <li>Locate and sit on top of focused window (If possible)</li>
   <li>Sit still</li>
+  <li>Detect and sit on top of ledges</li>
 </ul>
 
 <br>
