@@ -39,25 +39,26 @@
 
         public void NewRandomLineLocation()
         {
-            Screen[] screens = Screen.AllScreens;
-            Screen randomScreen = screens[Random.Shared.Next(screens.Length)];
-
-            Bitmap screenShot = new(randomScreen.Bounds.Width, randomScreen.Bounds.Height);
-
-            Graphics screenShotGraphics = Graphics.FromImage(screenShot);
-            screenShotGraphics.CopyFromScreen(randomScreen.Bounds.Left, randomScreen.Bounds.Top, 0, 0, randomScreen.Bounds.Size);
-
-            List<Line> lines = DetectHorizontalLines(screenShot, (int)(petSize.Width * 1.5), 10, 5);
-
-            if (lines.Count > 0)
+            try
             {
+                Screen[] screens = Screen.AllScreens;
+                Screen randomScreen = screens[Random.Shared.Next(screens.Length)];
+
+                Bitmap screenShot = new(randomScreen.Bounds.Width, randomScreen.Bounds.Height);
+
+                Graphics screenShotGraphics = Graphics.FromImage(screenShot);
+                screenShotGraphics.CopyFromScreen(randomScreen.Bounds.Left, randomScreen.Bounds.Top, 0, 0, randomScreen.Bounds.Size);
+
+                List<Line> lines = DetectHorizontalLines(screenShot, (int)(petSize.Width * 1.5), 10, 5);
+
                 Line randomLine = lines[Random.Shared.Next(lines.Count)];
 
                 Point randomLineLocation = new(Random.Shared.Next(randomScreen.Bounds.Left + randomLine.StartX + petSize.Width / 2, randomScreen.Bounds.Left + randomLine.EndX - petSize.Width / 2), randomScreen.Bounds.Top + randomLine.StartY);
                 RandomLineLocation = randomLineLocation;
             }
-            else
+            catch
             {
+                //This happens if CopyFromScreen fails (Win32Exception) or if no lines was detected (ArgumentOutOfRangeException).
                 NewRandomLocation();
                 RandomLineLocation = RandomLocation;
             }
